@@ -35,8 +35,8 @@ body {
     top: 20pt;
 }
 #appui_head.back{
-    padding: 4pt 6pt 4pt 31pt;
-    background: #6F9A37 url(img/back_arrow.png) 6pt center no-repeat;
+    padding: 24pt 6pt 4pt 31pt;
+    background: #6F9A37 url(img/back_arrow.png) 6pt 24pt no-repeat;
 }
 #splash_welcome{
     background: #4AF;    
