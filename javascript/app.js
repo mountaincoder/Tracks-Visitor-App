@@ -74,6 +74,8 @@ function drawEnclosurePage(EnclosureObjArray) {
     $("#EnclosureHeadDiv").html(getEnclosureHeadHTML(EnclosureObj));           
 
     getAnimalListForEnclosure(EnclosureID);
+
+    navigator.vibrate(500);
                                              
     resize_appui();
 }
@@ -612,7 +614,6 @@ function onDidRangeBeaconsInRegion(pluginResult) {
     // If the beacon is close and represents a new page, then show the page.
     if ((beacon.proximity == 'ProximityImmediate') && (CurrentBeacon != pluginResult.region.minor))
     {
-        //navigator.vibrate(500);
         getEnclosureIDFromBeacon(pluginResult.region.minor);
         return;
     }
