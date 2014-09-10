@@ -16,6 +16,18 @@
     <author href="https://trackssoftware.com" email="support@trackssoftware.com">
         Tony Niemann
     </author>
+    
+    <preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="false" />
+    
+    <!-- iPhone / iPod Touch  -->
+    <icon src="images/tracks-icon-72.png" gap:platform="ios" width="60" height="60" />
+    <icon src="images/tracks-icon-72.png" gap:platform="ios" width="120" height="120" />
+
+    <!-- iPad -->
+    <icon src="images/tracks-icon-72.png" gap:platform="ios" width="76" height="76" />
+    <icon src="images/tracks-icon-72.png" gap:platform="ios" width="152" height="152" />
+    
 
     <gap:platform name="ios" />
     <gap:platform name="android" />

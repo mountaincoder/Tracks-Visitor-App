@@ -520,7 +520,7 @@ function sessionIDQuerystringPair() {
 
 /* variables */
 var LOOKUP_ISAPI_DLL = 'tracksmobile.dll'
-var LOOKUP_ISAPI_URI = '/tracks/' + LOOKUP_ISAPI_DLL;
+var LOOKUP_ISAPI_URI = 'http://192.168.100.225/tracks/' + LOOKUP_ISAPI_DLL;
 var APP_UI_CONTAINER_ELEMENT_ID = 'appui';
 var APP_UI_HEAD_CONTAINER_ELEMENT_ID = 'appui_head';
 var APP_UI_FOOT_CONTAINER_ELEMENT_ID = 'appui_foot';
