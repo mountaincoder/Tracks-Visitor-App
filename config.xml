@@ -58,4 +58,8 @@
 
     <gap:platform name="ios" />
     
+    <feature name="Notification">
+        <param name="ios-package" value="CDVNotification" />
+    </feature>
+    
 </widget>
