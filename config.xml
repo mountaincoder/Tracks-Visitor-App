@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.trackssoftware.visitorapp"
+        versionCode = "10" 
+        version     = "1.0.0" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Visitor App Demo</name>
+
+    <description>
+        An Tracks visitor experience app. 
+    </description>
+
+    <author href="https://trackssoftware.com" email="support@trackssoftware.com">
+        Tony Niemann
+    </author>
+
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+</widget>
