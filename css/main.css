@@ -6,7 +6,7 @@ html{
 body {
     margin:0;
     padding:0;
-    font: normal 14px Verdona, Arial, Helvetica, sans-serif;
+    font: normal 14pt Verdona, Arial, Helvetica, sans-serif;
     color: #000;  
     background-color: #CCC;    
 }  
@@ -16,38 +16,38 @@ body {
 }    
 #appui_head{
     display: none;
-    padding: 4px 6px;
-    line-height: 32px;
+    padding: 24pt 6pt 4pt 6pt
+    line-height: 32pt;
   
     font-weight: bold;
     font-size: 135%;
     background-color: #6F9A37;   
-    border-bottom: 1px solid #000;          
+    border-bottom: 1pt solid #000;          
 }  
 #appui_head .logo{   
     background-image: url('img/zoo_logo.png?v=3');
-    background-position: center right 8px;
+    background-position: center right 8pt;
     background-repeat: no-repeat;   
-    width: 50px;
-    height: 40px;
+    width: 50pt;
+    height: 40pt;
     position: absolute;
     right: 0;
     top: 0;
 }
 #appui_head.back{
-    padding: 4px 6px 4px 31px;
-    background: #6F9A37 url(img/back_arrow.png) 6px center no-repeat;
+    padding: 4pt 6pt 4pt 31pt;
+    background: #6F9A37 url(img/back_arrow.png) 6pt center no-repeat;
 }
 #appui_foot{   
     display: block;
     position: absolute;
-    bottom: 0px;
+    bottom: 0pt;
     width: 100%;
     
-    padding: 4px 0;
+    padding: 4pt 0;
     margin: 0;
     background-color: #6F9A37;   
-    border-top: 1px solid #000;
+    border-top: 1pt solid #000;
     text-align: center;
 }   
 #appui{
@@ -58,52 +58,52 @@ body {
 
 /* Enclosure Page */
 #EnclosureHeadDiv.DisplayHead {                     
-    padding: 0 0 6px 0;
+    padding: 0 0 6pt 0;
     margin: 0;                       
 }                              
 #EnclosureHeadDiv.DisplayHead .EnclosureDesc,
 #EnclosureHeadDiv.DisplayHead .Instructions{
-    padding: 4px 6px;
+    padding: 4pt 6pt;
 }     
 #EnclosureHeadDiv.DisplayHead .Instructions{  
     color: #FFF;  
     background-color: #000; 
     text-align: center;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
 }                
 .ListItem{
     clear: both;
     overflow: hidden;
-    padding: 2px 15px 12px 15px;
-    min-height: 100px;
+    padding: 2pt 15pt 12pt 15pt;
+    min-height: 100pt;
 }     
 .ListItem .ImageThumbDiv {   
     display: table-cell; 
-    width: 100px;  
-    min-height: 100px;
+    width: 100pt;  
+    min-height: 100pt;
 }
 .ListItem .ListingInfo {      
     display: table-cell; 
     vertical-align: middle;  
-    padding-left: 30px; 
+    padding-left: 30pt; 
 } 
 .ListItem .ImageThumbDiv .ImageThumb{ 
-    width: 100px;
-    box-shadow: 10px 10px 5px #888;
+    width: 100pt;
+    box-shadow: 10pt 10pt 5pt #888;
 }
           
 /* Animal Page */
 #AnimalHeadDiv.DisplayHead{
-    border-bottom: 1px solid #000; 
-    padding: 4px 6px; 
+    border-bottom: 1pt solid #000; 
+    padding: 4pt 6pt; 
 }
 #AnimalHeadDiv.DisplayHead .ImageThumbDiv .ImageThumb{ 
     width: 92%;
-    box-shadow: 10px 10px 5px #888;
+    box-shadow: 10pt 10pt 5pt #888;
 }
 #AnimalHeadDiv.DisplayHead #HeadInfoDiv{
-    padding-top: 20px;
+    padding-top: 20pt;
 }
 #AnimalHeadDiv.DisplayHead #HeadInfoDiv .row{
     display: table-row;
@@ -125,23 +125,23 @@ body {
 #AnimalHeadDiv.DisplayHead #HeadInfoDiv .Age{}
 
 #AnimalActivityDiv {
-    padding: 4px 6px;     
+    padding: 4pt 6pt;     
 }
 #AnimalActivityDiv .media img{
     width: 92%;  
 }
 #AnimalActivityDiv .AnimalDetailHead{
-    padding: 4px 0;
+    padding: 4pt 0;
     font-size: 120%;
 }
 #AnimalActivityDiv .AnimalActivity {            
-    padding-bottom: 15px;  
+    padding-bottom: 15pt;  
     overflow: hidden;
     width: 100%;
 }  
 #AnimalActivityDiv .AnimalActivity div{
     display: inline;
-    padding-right: 15px;
+    padding-right: 15pt;
 }
 
 /* Donation Page */
@@ -167,19 +167,19 @@ body {
     clear: both;
     overflow: hidden;
     display: table;
-    padding: 50px 0;
+    padding: 50pt 0;
 }
 #DonationPage .display .unit{    
-    padding: 6px 4px 0 0;
+    padding: 6pt 4pt 0 0;
     float: left;
-    font-size: 30px;
+    font-size: 30pt;
 }
 #DonationPage .display .amount{    
     float: left;
-    font-size: 50px;
+    font-size: 50pt;
 }
 #DonationPage .entry{
-    font-size: 20px;
+    font-size: 20pt;
 }
 
 #DonationPage .entry{  
@@ -192,18 +192,18 @@ body {
 #DonationPage .entry .row .item{
     display: table-cell;
     text-align: center; 
-    padding: 0 15px;    
+    padding: 0 15pt;    
 vertical-align: middle;       
 }
 #DonationPage .entry .row .item.delete .item_inner{  
     background-image: url(img/delete.png);
     background-position: center;
     background-repeat: no-repeat;
-    height: 20px;
+    height: 20pt;
 }
 #DonationPage .entry .row .item .item_inner{
-    padding: 15px 0;
-    border-bottom: 2px solid #2EBEEB;
+    padding: 15pt 0;
+    border-bottom: 2pt solid #2EBEEB;
 }
 #DonationPage .entry .row.last .item .item_inner{  
     border-bottom: none;
@@ -220,7 +220,7 @@ vertical-align: middle;
     right: 0;
 }
 #appui.landscape #DonationPage .display{
-    padding: 80px 0;
+    padding: 80pt 0;
 }
 
 
