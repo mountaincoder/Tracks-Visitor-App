@@ -75,7 +75,8 @@ function drawEnclosurePage(EnclosureObjArray) {
 
     getAnimalListForEnclosure(EnclosureID);
 
-    navigator.vibrate(500);
+    navigator.notification.vibrate(500);
+    navigator.notification.beep(1);
                                              
     resize_appui();
 }
