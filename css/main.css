@@ -16,7 +16,7 @@ body {
 }    
 #appui_head{
     display: none;
-    padding: 24pt 6pt 4pt 6pt
+    padding: 24pt 6pt 4pt 6pt;
     line-height: 32pt;
   
     font-weight: bold;
