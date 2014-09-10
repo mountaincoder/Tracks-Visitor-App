@@ -1,4 +1,6 @@
-$(function(){               
+$(function(){   
+    $(document).on('deviceready', onDeviceReady);
+            
     $(window).on('resize', resize_appui);   
     
     $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).hammer({ dragLockToAxis: true });
@@ -511,6 +513,117 @@ function getTracksAjax(URI, callback, isAsync) {
             console.log(ErrorText);
         }
     });
+}
+
+function onDeviceReady() {
+    // Specify a shortcut for the location manager holding the iBeacon functions.
+    window.locationManager = cordova.plugins.locationManager;
+
+    // Start tracking beacons!
+    startScanForBeacons();
+}
+
+function startScanForBeacons() {
+    window.alert('startScanForBeacons');
+
+    // The delegate object contains iBeacon callback functions.
+    var delegate = locationManager.delegate.implement(
+    {
+        didDetermineStateForRegion: function(pluginResult)
+        {
+            window.alert('didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+        },
+
+        didStartMonitoringForRegion: function(pluginResult)
+        {
+            window.alert('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+        },
+
+        didRangeBeaconsInRegion: function(pluginResult)
+        {
+            window.alert('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+            onDidRangeBeaconsInRegion(pluginResult)
+        }
+    })
+
+    // Set the delegare object to use.
+    locationManager.setDelegate(delegate);
+
+    // Start monitoring and ranging our beacons.
+    for (var r in beaconRegions)
+    {
+        var region = beaconRegions[r]
+
+        var beaconRegion = new locationManager.BeaconRegion(
+            region.id, region.uuid, region.major, region.minor)
+
+        // Start monitoring.
+        locationManager.startMonitoringForRegion(beaconRegion)
+            .fail(console.error)
+            .done()
+
+        // Start ranging.
+        locationManager.startRangingBeaconsInRegion(beaconRegion)
+            .fail(console.error)
+            .done()
+    }
+}
+
+var beaconRegions =
+[
+    {
+        id: 'icy-marshmallow',
+        uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+        major: 999,
+        minor: 1
+    },
+    {
+        id: 'bluebery-pie',
+        uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+        major: 999,
+        minor: 2
+    },
+    {
+        id: 'cocktail-mint',
+        uuid:'B9407F30-F5F8-466E-AFF9-25556B57FE6D',
+        major: 999,
+        minor: 3
+    }
+];
+
+function onDidRangeBeaconsInRegion(pluginResult) {
+    // There must be a beacon within range.
+    if (0 == pluginResult.beacons.length)
+    {
+        return
+    }
+
+    // Our regions are defined so that there is one beacon per region.
+    // Get the first (and only) beacon in range in the region.
+    var beacon = pluginResult.beacons[0];
+
+    // The region identifier is the page id.
+    var pageId = pluginResult.region.identifier;
+
+    window.alert('ranged beacon: ' + pageId + ' ' + beacon.proximity);
+
+    // If the beacon is close and represents a new page, then show the page.
+//    if ((beacon.proximity == 'ProximityImmediate' || beacon.proximity == 'ProximityNear')
+//        && app.currentPage != pageId)
+//    {
+//        app.gotoPage(pageId)
+//        return
+//    }
+//
+//    // If the beacon represents the current page but is far away,
+//    // then show the default page.
+//    if ((beacon.proximity == 'ProximityFar' || beacon.proximity == 'ProximityUnknown')
+//        && app.currentPage == pageId)
+//    {
+//        app.gotoPage('page-default')
+//        return
+//    }
+    
 }
   
 function sessionIDQuerystringPair() {
