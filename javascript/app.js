@@ -555,12 +555,14 @@ function startScanForBeacons() {
     locationManager.setDelegate(delegate);
 
     // Start monitoring and ranging our beacons.
-    for (var r in beaconRegions)
-    {
-        var region = beaconRegions[r]
+//    for (var r in beaconRegions)
+//    {
+//        var region = beaconRegions[r]
 
+//        var beaconRegion = new locationManager.BeaconRegion(
+//            region.id, region.uuid, region.major, region.minor)
         var beaconRegion = new locationManager.BeaconRegion(
-            region.id, region.uuid, region.major, region.minor)
+            'test', 'B9407F30-F5F8-466E-AFF9-25556B57FE6D', 999)
 
         // Start monitoring.
         locationManager.startMonitoringForRegion(beaconRegion)
@@ -571,7 +573,7 @@ function startScanForBeacons() {
         locationManager.startRangingBeaconsInRegion(beaconRegion)
             .fail(console.error)
             .done()
-    }
+//    }
 }
 
 var beaconRegions =
