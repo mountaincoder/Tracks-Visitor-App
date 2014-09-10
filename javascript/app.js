@@ -446,6 +446,8 @@ function getMediaIMGElement(MediaFileID, AnimalName, ReturnType) {
 function getEnclosureIDFromBeacon(BeaconID) {
     var URI;
     
+    CurrentBeacon = BeaconID;
+    
     URI = LOOKUP_ISAPI_URI + LOOKUP_ENCLOSURE_POSTFIX + QUESTION + 
           ENCLOSURE_IDENTIFIER_TYPE + EQUALS + BEACON_IDENTIFIER_TYPE + AMPER +
           ENCLOSURE_ID + EQUALS + BeaconID + AMPER + sessionIDQuerystringPair();
@@ -524,24 +526,24 @@ function onDeviceReady() {
 }
 
 function startScanForBeacons() {
-    window.alert('startScanForBeacons');
+    //window.alert('startScanForBeacons');
 
     // The delegate object contains iBeacon callback functions.
     var delegate = locationManager.delegate.implement(
     {
         didDetermineStateForRegion: function(pluginResult)
         {
-            window.alert('didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
+            //window.alert('didDetermineStateForRegion: ' + JSON.stringify(pluginResult));
         },
 
         didStartMonitoringForRegion: function(pluginResult)
         {
-            window.alert('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
+            //window.alert('didStartMonitoringForRegion:' + JSON.stringify(pluginResult));
         },
 
         didRangeBeaconsInRegion: function(pluginResult)
         {
-            window.alert('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
+            //window.alert('didRangeBeaconsInRegion: ' + JSON.stringify(pluginResult));
             onDidRangeBeaconsInRegion(pluginResult)
         }
     })
@@ -605,15 +607,14 @@ function onDidRangeBeaconsInRegion(pluginResult) {
     // The region identifier is the page id.
     var pageId = pluginResult.region.identifier;
 
-    window.alert('ranged beacon: ' + pageId + ' ' + beacon.proximity);
+    //window.alert('ranged beacon: ' + pageId + ' ' + beacon.proximity);
 
     // If the beacon is close and represents a new page, then show the page.
-//    if ((beacon.proximity == 'ProximityImmediate' || beacon.proximity == 'ProximityNear')
-//        && app.currentPage != pageId)
-//    {
-//        app.gotoPage(pageId)
-//        return
-//    }
+    if ((beacon.proximity == 'ProximityImmediate') && (CurrentBeacon != pluginResult.region.minor))
+    {
+        getEnclosureIDFromBeacon(pluginResult.region.minor)
+        return
+    }
 //
 //    // If the beacon represents the current page but is far away,
 //    // then show the default page.
@@ -632,7 +633,9 @@ function sessionIDQuerystringPair() {
 
 
 /* variables */
-var LOOKUP_ISAPI_DLL = 'tracksmobile.dll'
+var CurrentBeacon = '';
+
+var LOOKUP_ISAPI_DLL = 'tracksmobile.dll';
 var LOOKUP_ISAPI_URI = 'http://192.168.100.225/tracks/' + LOOKUP_ISAPI_DLL;
 var APP_UI_CONTAINER_ELEMENT_ID = 'appui';
 var APP_UI_HEAD_CONTAINER_ELEMENT_ID = 'appui_head';
@@ -640,7 +643,7 @@ var APP_UI_FOOT_CONTAINER_ELEMENT_ID = 'appui_foot';
 var APP_UI_CONTENT_HIDING_PLACE = 'cubby';
 var REQUEST_TYPE_GET = 'get';
 var REQUEST_TYPE_POST = 'post';
-var DATA_TYPE_JSON = 'json'
+var DATA_TYPE_JSON = 'json';
 var SESSION_COOKIE_NAME = 'VisitorSessID';
 var SESSION_ID_NAME = 'TracksSessionID';
 var NOT_LOGGED_IN = "not-logged-in";
@@ -665,3 +668,4 @@ var TAXA_DATATYPE = 'taxa';
 var ANIMALS_DATATYPE = 'animals';
 var ACTIVITY_DATATYPE = 'activity';
 var DONATION_AMOUNT = 'donation_amount';
+
