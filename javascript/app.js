@@ -1,7 +1,8 @@
 $(function(){   
     $(document).on('deviceready', onDeviceReady);
             
-    $(window).on('resize', resize_appui);   
+    $(window).on('resize', resize_appui); 
+    resize_appui();  
     
     $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).hammer({ dragLockToAxis: true });
     $(document).off("tap", "#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID); 
@@ -49,8 +50,16 @@ $(function(){
     doOnOrientationChange(); 
 });    
                    
-function resize_appui(){          
-    $('#appui').height($('html').outerHeight(true) - $('#appui_head').outerHeight(true) - $('#appui_foot').outerHeight(true));  
+function resize_appui(){  
+    var new_height;
+    new_height = $('html').outerHeight(true);
+    if($('#appui_head').css('display') != 'none'){
+        new_height = new_height - $('#appui_head').outerHeight(true);
+    }
+    if($('#appui_foot').css('display') != 'none'){
+        new_height = new_height - $('#appui_foot').outerHeight(true);
+    }     
+    $('#appui').height(new_height);                                                                                              
 }  
 
 /* draw Pages */
