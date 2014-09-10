@@ -10,7 +10,7 @@
     <name>Visitor App Demo</name>
 
     <description>
-        An Tracks visitor experience app. 
+        A Tracks visitor experience demonstration app. 
     </description>
 
     <author href="https://trackssoftware.com" email="support@trackssoftware.com">
@@ -37,7 +37,7 @@
     <icon src="images/logo-40@2x.png" gap:platform="ios" width="80" height="80" />
     
     <gap:plugin name="com.unarin.cordova.beacon" version="3.0.0" />
-    <gap:plugin name="org.apache.cordova.vibration" version="0.3.7" />
+    <gap:plugin name="org.apache.cordova.vibration" />
 
     <gap:platform name="ios" />
     
