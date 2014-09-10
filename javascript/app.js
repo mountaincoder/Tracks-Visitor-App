@@ -612,7 +612,7 @@ function onDidRangeBeaconsInRegion(pluginResult) {
     // If the beacon is close and represents a new page, then show the page.
     if ((beacon.proximity == 'ProximityImmediate') && (CurrentBeacon != pluginResult.region.minor))
     {
-        navigator.notification.vibrate(500);
+        navigator.vibrate();
         getEnclosureIDFromBeacon(pluginResult.region.minor);
         return;
     }
