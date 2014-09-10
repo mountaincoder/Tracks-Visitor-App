@@ -27,7 +27,7 @@ $(function(){
     $(document).off("tap", "#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID); 
     $(document).on("tap", "#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID, function(){  
         if($("#" + APP_UI_CONTAINER_ELEMENT_ID).hasClass('donation_page')){             
-            //send donation
+            drawSendDonation();
         }
         else{
             drawDonationPage();   
@@ -231,6 +231,11 @@ function drawDonationPage(){
         }
         updateDonation();
     }); 
+}
+
+function drawSendDonation(){  
+    $("#" + APP_UI_CONTAINER_ELEMENT_ID).empty()
+        .html('Thank you for your donation.');
 }
 
 /* login functions */
