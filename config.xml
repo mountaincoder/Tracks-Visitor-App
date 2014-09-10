@@ -29,6 +29,7 @@
     <icon src="images/tracks-icon-72.png" gap:platform="ios" width="152" height="152" />
     
     <gap:plugin name="com.unarin.cordova.beacon" version="3.0.0" />
+    <gap:plugin name="org.apache.cordova.vibration" version="0.3.7" />
 
     <gap:platform name="ios" />
     
