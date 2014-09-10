@@ -54,7 +54,6 @@
     
     
     <gap:plugin name="com.unarin.cordova.beacon" version="3.0.0" />
-    <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.dialogs" />
     <gap:plugin name="org.apache.cordova.vibration" version="0.3.7" />
     
