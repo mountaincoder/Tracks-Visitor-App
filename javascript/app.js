@@ -59,6 +59,7 @@ function drawEnclosurePage(EnclosureObjArray) {
 
     EnclosureObj = EnclosureObjArray.data[0];
     EnclosureID = EnclosureObj.EnclosureID;
+    $('#appui_foot').show();
                                              
     $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).empty();                                                 
     $('#' + APP_UI_HEAD_CONTAINER_ELEMENT_ID).html(EnclosureObj.Name + '<div class="logo"></div>');

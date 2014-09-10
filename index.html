@@ -28,11 +28,13 @@ $(document).ready(function() {
     <div id="body">
         <div id="appui_head" class="appui"></div>                                 
         <div id="appui" class="appui">
-            <label for="BeaconID">Beacon #</label>
-            <input type="text" id="BeaconID"><br />
-            <button id="StartButton" disabled="true">Start</button>
+            <div id="splash_welcome">
+                <div class="title">Welcome to our zoo</div>
+                <div class="image"><img alt="" src="images/logo-256.png"></div>
+                <div class="description">Walk around our to our different exhibits and find out more about our amazing animals.</div>
+            </div>    
         </div>   
-        <div id="appui_foot" class="appui"> 
+        <div id="appui_foot" class="appui" style="display: none;"> 
             <div class="normal">Donate to this exhibit</div> 
             <div class="donation">Send Donation</div>
         </div>

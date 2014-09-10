@@ -38,6 +38,15 @@ body {
     padding: 4pt 6pt 4pt 31pt;
     background: #6F9A37 url(img/back_arrow.png) 6pt center no-repeat;
 }
+#splash_welcome .title{
+    font-size: 24pt;  
+}
+#splash_welcome .image{
+    text-align: center;  
+}
+#splash_welcome .image img{
+    width: 128pt;
+}
 #appui_foot{   
     display: block;
     position: absolute;
