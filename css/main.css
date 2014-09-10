@@ -44,19 +44,17 @@ body {
 }
 #splash_welcome .title{
     text-align: center;  
-    padding: 25pt 5pt 5pt 5pt;
+    padding: 35pt 10pt 10pt 10pt;
     font-size: 24pt;  
 }
+#splash_welcome .description,
 #splash_welcome .image{
     text-align: center; 
-    padding: 5pt; 
+    padding: 10pt; 
 }
 #splash_welcome .image img{
     width: 128pt;
-}
-#splash_welcome .description{  
-    padding: 5pt; 
-}
+}     
 #appui_foot{   
     display: block;
     position: absolute;
