@@ -1,0 +1,230 @@
+html{            
+    overflow: hidden;
+    height: 100%;
+    display: block;
+}
+body {
+    margin:0;
+    padding:0;
+    font: normal 14px Verdona, Arial, Helvetica, sans-serif;
+    color: #000;  
+    background-color: #CCC;    
+}  
+ 
+#body{   
+    overflow: hidden;
+}    
+#appui_head{
+    display: none;
+    padding: 4px 6px;
+    line-height: 32px;
+  
+    font-weight: bold;
+    font-size: 135%;
+    background-color: #6F9A37;   
+    border-bottom: 1px solid #000;          
+}  
+#appui_head .logo{   
+    background-image: url('img/zoo_logo.png?v=3');
+    background-position: center right 8px;
+    background-repeat: no-repeat;   
+    width: 50px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+#appui_head.back{
+    padding: 4px 6px 4px 31px;
+    background: #6F9A37 url(img/back_arrow.png) 6px center no-repeat;
+}
+#appui_foot{   
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    
+    padding: 4px 0;
+    margin: 0;
+    background-color: #6F9A37;   
+    border-top: 1px solid #000;
+    text-align: center;
+}   
+#appui{
+    overflow-y: auto;     
+    display: block;
+    position: relative;
+}    
+
+/* Enclosure Page */
+#EnclosureHeadDiv.DisplayHead {                     
+    padding: 0 0 6px 0;
+    margin: 0;                       
+}                              
+#EnclosureHeadDiv.DisplayHead .EnclosureDesc,
+#EnclosureHeadDiv.DisplayHead .Instructions{
+    padding: 4px 6px;
+}     
+#EnclosureHeadDiv.DisplayHead .Instructions{  
+    color: #FFF;  
+    background-color: #000; 
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}                
+.ListItem{
+    clear: both;
+    overflow: hidden;
+    padding: 2px 15px 12px 15px;
+    min-height: 100px;
+}     
+.ListItem .ImageThumbDiv {   
+    display: table-cell; 
+    width: 100px;  
+    min-height: 100px;
+}
+.ListItem .ListingInfo {      
+    display: table-cell; 
+    vertical-align: middle;  
+    padding-left: 30px; 
+} 
+.ListItem .ImageThumbDiv .ImageThumb{ 
+    width: 100px;
+    box-shadow: 10px 10px 5px #888;
+}
+          
+/* Animal Page */
+#AnimalHeadDiv.DisplayHead{
+    border-bottom: 1px solid #000; 
+    padding: 4px 6px; 
+}
+#AnimalHeadDiv.DisplayHead .ImageThumbDiv .ImageThumb{ 
+    width: 92%;
+    box-shadow: 10px 10px 5px #888;
+}
+#AnimalHeadDiv.DisplayHead #HeadInfoDiv{
+    padding-top: 20px;
+}
+#AnimalHeadDiv.DisplayHead #HeadInfoDiv .row{
+    display: table-row;
+    width: 100%;
+}
+#AnimalHeadDiv.DisplayHead #HeadInfoDiv .row div{  
+    display: table-cell;
+}
+#AnimalHeadDiv.DisplayHead #HeadInfoDiv .DisplayName{
+    font-size: 120%;  
+}
+#AnimalHeadDiv.DisplayHead #HeadInfoDiv .CommonTaxa{}
+
+#AnimalHeadDiv.DisplayHead #HeadInfoDiv .GenusTaxa{
+    font-style: italic;
+}
+
+#AnimalHeadDiv.DisplayHead #HeadInfoDiv .Sex{}
+#AnimalHeadDiv.DisplayHead #HeadInfoDiv .Age{}
+
+#AnimalActivityDiv {
+    padding: 4px 6px;     
+}
+#AnimalActivityDiv .media img{
+    width: 92%;  
+}
+#AnimalActivityDiv .AnimalDetailHead{
+    padding: 4px 0;
+    font-size: 120%;
+}
+#AnimalActivityDiv .AnimalActivity {            
+    padding-bottom: 15px;  
+    overflow: hidden;
+    width: 100%;
+}  
+#AnimalActivityDiv .AnimalActivity div{
+    display: inline;
+    padding-right: 15px;
+}
+
+/* Donation Page */
+#appui.donation_page{
+    background-color: #00A3FF;
+    color: #FFF;
+}
+#appui_foot .normal{
+    display: block;  
+}
+#appui_foot .donation{   
+    display: none;  
+}
+#appui_foot.donation_page .normal{  
+    display: none;  
+}
+#appui_foot.donation_page .donation{ 
+    display: block;  
+}    
+#DonationPage .display{  
+    text-align: center;
+    margin: auto;
+    clear: both;
+    overflow: hidden;
+    display: table;
+    padding: 50px 0;
+}
+#DonationPage .display .unit{    
+    padding: 6px 4px 0 0;
+    float: left;
+    font-size: 30px;
+}
+#DonationPage .display .amount{    
+    float: left;
+    font-size: 50px;
+}
+#DonationPage .entry{
+    font-size: 20px;
+}
+
+#DonationPage .entry{  
+    display: table;
+    width: 100%;
+}
+#DonationPage .entry .row{
+    display: table-row;
+}
+#DonationPage .entry .row .item{
+    display: table-cell;
+    text-align: center; 
+    padding: 0 15px;    
+vertical-align: middle;       
+}
+#DonationPage .entry .row .item.delete .item_inner{  
+    background-image: url(img/delete.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 20px;
+}
+#DonationPage .entry .row .item .item_inner{
+    padding: 15px 0;
+    border-bottom: 2px solid #2EBEEB;
+}
+#DonationPage .entry .row.last .item .item_inner{  
+    border-bottom: none;
+}
+
+#appui.landscape #DonationPage{
+    width: 50%;
+    overflow: hidden;
+}
+#appui.landscape #DonationPage .entry{
+    width: 50%;     
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#appui.landscape #DonationPage .display{
+    padding: 80px 0;
+}
+
+
+/* extra classes */
+.hideDiv { 
+  display: none 
+}
