@@ -55,12 +55,12 @@
     
     <gap:plugin name="com.unarin.cordova.beacon" version="3.0.0" />
     <gap:plugin name="org.apache.cordova.core.dialogs" />
-    <gap:plugin name="org.apache.cordova.vibration" />
+    <gap:plugin name="org.apache.cordova.core.vibration" />
     
     <gap:platform name="ios" />
     
     <feature name="Notification">
-        <param name="ios-package" onload="true" value="CDVNotification" />
+        <param name="ios-package" value="CDVNotification" />
     </feature>
     
 </widget>
