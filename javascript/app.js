@@ -303,8 +303,8 @@ function reset() {
 
     ServerAddress = $.jStorage.get(SERVER_ADDRESS_KEY);
 
-    if(ServerAddress == null || ServerAddress != SERVER_DEFAULT_HREF)
-        $.jStorage.set(SERVER_ADDRESS_KEY, SERVER_DEFAULT_HREF);
+//    if(ServerAddress == null || ServerAddress != SERVER_DEFAULT_HREF)
+//        $.jStorage.set(SERVER_ADDRESS_KEY, SERVER_DEFAULT_HREF);
 
     LoginThingy = checkLoginCookies();
                                                                                         
@@ -571,6 +571,7 @@ function getTracksAjax(URI, callback, isAsync) {
                 $.jStorage.set(SESSION_COOKIE_NAME, '');
             }
             ErrorText = JSONResponseArray.error.response_code;
+            window.alert(ErrorText);
             console.log(ErrorText);
         }
     });
