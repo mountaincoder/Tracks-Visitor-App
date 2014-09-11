@@ -184,7 +184,7 @@ body {
     clear: both;
     overflow: hidden;
     display: table;
-    padding: 40pt 0;
+    padding: 35pt 0;
 }
 #DonationPage .display .unit{    
     padding: 6pt 4pt 0 0;
@@ -224,6 +224,11 @@ vertical-align: middle;
 }
 #DonationPage .entry .row.last .item .item_inner{  
     border-bottom: none;
+}
+#appui .donate_thank_you{
+    text-align: center;
+    font-size: 24pt;
+    padding: 15pt;
 }
 
 #appui.landscape #DonationPage{

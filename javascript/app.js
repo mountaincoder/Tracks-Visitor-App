@@ -12,6 +12,7 @@ $(function(){
             $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).removeClass('back');
             $("#" + APP_UI_CONTAINER_ELEMENT_ID).removeClass('donation_page');
             $("#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID).removeClass('donation_page');
+            $('#' + APP_UI_FOOT_CONTAINER_ELEMENT_ID).show();
 
             $('.ContentInner .ListItem').each(function(){
                 $(this).hammer({ dragLockToAxis: true });
@@ -53,13 +54,13 @@ $(function(){
 function resize_appui(){
     var new_height;
     new_height = $('html').outerHeight(true);
-    if($('#appui_head').css('display') != 'none'){
-        new_height = new_height - $('#appui_head').outerHeight(true);
+    if($('#' + APP_UI_HEAD_CONTAINER_ELEMENT_ID).css('display') != 'none'){
+        new_height = new_height - $('#' + APP_UI_HEAD_CONTAINER_ELEMENT_ID).outerHeight(true);
     }
-    if($('#appui_foot').css('display') != 'none'){
-        new_height = new_height - $('#appui_foot').outerHeight(true);
+    if($('#' + APP_UI_FOOT_CONTAINER_ELEMENT_ID).css('display') != 'none'){
+        new_height = new_height - $('#' + APP_UI_FOOT_CONTAINER_ELEMENT_ID).outerHeight(true);
     }
-    $('#appui').height(new_height);
+    $('#' + APP_UI_CONTAINER_ELEMENT_ID).height(new_height);
 }
 
 /* draw Pages */
@@ -68,12 +69,12 @@ function drawEnclosurePage(EnclosureObjArray) {
 
     EnclosureObj = EnclosureObjArray.data[0];
     EnclosureID = EnclosureObj.EnclosureID;
-    $('#appui_foot').show();
+    $('#' + APP_UI_FOOT_CONTAINER_ELEMENT_ID).show();
 
-    $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).empty();
+    $('#' + APP_UI_HEAD_CONTAINER_ELEMENT_ID).empty();
     $('#' + APP_UI_HEAD_CONTAINER_ELEMENT_ID).html(EnclosureObj.Name + '<div class="logo"></div>');
-    $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).show();
-    $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).removeClass('back');
+    $('#' + APP_UI_HEAD_CONTAINER_ELEMENT_ID).show();
+    $('#' + APP_UI_HEAD_CONTAINER_ELEMENT_ID).removeClass('back');
 
     $("#" + APP_UI_CONTAINER_ELEMENT_ID).empty();
     $('<div>').attr({
@@ -233,9 +234,11 @@ function drawDonationPage(){
     });
 }
 
-function drawSendDonation(){
+function drawSendDonation(){                         
+    $('#' + APP_UI_FOOT_CONTAINER_ELEMENT_ID).hide();
+    resize_appui();
     $("#" + APP_UI_CONTAINER_ELEMENT_ID).empty()
-        .html('Thank you for your donation.');
+        .html('<div class="donate_thank_you">Thank you for your donation.</div>');
 }
 
 /* login functions */
@@ -277,8 +280,26 @@ function checkLoginCookies() {
     }
 }
 
+function getQueryStringAssocArray(HrefString) {
+    var ReturnArray, HrefArray;
+
+    ReturnArray = {};
+    HrefArray = HrefString.split("?");
+    
+    if(HrefArray.length > 1) {
+        $.each(HrefArray[1].split("&"), function(idx, Pair) {
+            var PairArray = Pair.split("=");
+
+            if(PairArray.length > 1) 
+                ReturnArray[PairArray[0]] = decodeURIComponent(PairArray[1]);
+        });
+    }
+
+    return ReturnArray;
+}
+
 function reset() {
-    var LoginThingy, ServerAddress;
+    var LoginThingy, ServerAddress, PreLoadEncID;
 
     ServerAddress = $.jStorage.get(SERVER_ADDRESS_KEY);
 
@@ -286,19 +307,19 @@ function reset() {
         $.jStorage.set(SERVER_ADDRESS_KEY, SERVER_DEFAULT_HREF);
 
     LoginThingy = checkLoginCookies();
+                                                                                        
+    PreLoadEncID = getQueryStringAssocArray($(location).attr("href"))[ENCLOSURE_ID];
 
     if(LoginThingy == NOT_LOGGED_IN)
         validateLogin(VISITOR_USER, VISITOR_PASS);
-    else {
-        $("#StartButton").attr("disabled", false);
+    else {    
+        if(PreLoadEncID != null){
+            getEnclosureIDFromBeacon(PreLoadEncID);
+        }   
 
-        $('#StartButton').hammer({ dragLockToAxis: true });
-        $(document).off("tap", '#StartButton');
-        $(document).on("tap", '#StartButton', function(){
-            getEnclosureIDFromBeacon($("#BeaconID").val());
-        });
-        $(document).off("click", '#gear');
-        $(document).on("click", '#gear', function(){
+        $('#gear').hammer({ dragLockToAxis: true });
+        $(document).off("tap", '#gear');
+        $(document).on("tap", '#gear', function(){
             var CurrentServerHREF, NewServerHREF;
             CurrentServerHREF = $.jStorage.get(SERVER_ADDRESS_KEY);
             NewServerHREF = window.prompt("please enter the address of ISAPI Server", CurrentServerHREF);
@@ -528,7 +549,7 @@ function getTracksAjax(URI, callback, isAsync) {
     request = $.ajax({
         type: REQUEST_TYPE_GET,
         async: isAsync,
-        url: URI,
+        url: URI,                         
         dataType: DATA_TYPE_JSON
     });
 
