@@ -304,7 +304,9 @@ function reset() {
     ServerAddress = $.jStorage.get(SERVER_ADDRESS_KEY);
 
 //    if(ServerAddress == null || ServerAddress != SERVER_DEFAULT_HREF)
-//        $.jStorage.set(SERVER_ADDRESS_KEY, SERVER_DEFAULT_HREF);
+    if(ServerAddress == null) {
+        $.jStorage.set(SERVER_ADDRESS_KEY, SERVER_DEFAULT_HREF)
+    };
 
     LoginThingy = checkLoginCookies();
                                                                                         
