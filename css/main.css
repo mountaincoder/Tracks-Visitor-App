@@ -240,7 +240,11 @@ vertical-align: middle;
     padding: 80pt 0;
 }
 
-
+#gear {
+    position: fixed;
+    right:0;
+    bottom:0;
+}
 /* extra classes */
 .hideDiv { 
   display: none 

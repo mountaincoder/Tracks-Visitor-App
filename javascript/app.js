@@ -1,56 +1,56 @@
-$(function(){   
+$(function(){
     $(document).on('deviceready', onDeviceReady);
-            
-    $(window).on('resize', resize_appui); 
-    resize_appui();  
-    
+
+    $(window).on('resize', resize_appui);
+    resize_appui();
+
     $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).hammer({ dragLockToAxis: true });
-    $(document).off("tap", "#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID); 
-    $(document).on("tap", "#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID, function(){   
-        if($("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).hasClass('back')){                                    
-            showOrHideAndSaveContent(false);  
-            $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).removeClass('back');  
-            $("#" + APP_UI_CONTAINER_ELEMENT_ID).removeClass('donation_page');   
-            $("#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID).removeClass('donation_page'); 
-                 
-            $('.ContentInner .ListItem').each(function(){                      
-                $(this).hammer({ dragLockToAxis: true });             
-                $(document).off("tap", '#' + $(this).attr('id')); 
-                $(document).on("tap", '#' + $(this).attr('id'), function(){       
+    $(document).off("tap", "#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID);
+    $(document).on("tap", "#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID, function(){
+        if($("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).hasClass('back')){
+            showOrHideAndSaveContent(false);
+            $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).removeClass('back');
+            $("#" + APP_UI_CONTAINER_ELEMENT_ID).removeClass('donation_page');
+            $("#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID).removeClass('donation_page');
+
+            $('.ContentInner .ListItem').each(function(){
+                $(this).hammer({ dragLockToAxis: true });
+                $(document).off("tap", '#' + $(this).attr('id'));
+                $(document).on("tap", '#' + $(this).attr('id'), function(){
                     getAnimalDetail($(this).attr("id").replace("Animal", ""));
                 });
-            });      
+            });
         }
-    });  
-    
+    });
+
     $("#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID).hammer({ dragLockToAxis: true });
-    $(document).off("tap", "#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID); 
-    $(document).on("tap", "#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID, function(){  
-        if($("#" + APP_UI_CONTAINER_ELEMENT_ID).hasClass('donation_page')){             
+    $(document).off("tap", "#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID);
+    $(document).on("tap", "#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID, function(){
+        if($("#" + APP_UI_CONTAINER_ELEMENT_ID).hasClass('donation_page')){
             drawSendDonation();
         }
         else{
-            drawDonationPage();   
+            drawDonationPage();
         }
     });
-    
+
     function doOnOrientationChange(){
-        switch(window.orientation) {  
+        switch(window.orientation) {
             case -90:
-            case 90:                
+            case 90:
               $("#" + APP_UI_CONTAINER_ELEMENT_ID).addClass('landscape');
-              break; 
-            default:                
+              break;
+            default:
               $("#" + APP_UI_CONTAINER_ELEMENT_ID).removeClass('landscape');
-              break; 
+              break;
         }
-    }  
-    window.addEventListener('orientationchange', doOnOrientationChange); 
+    }
+    window.addEventListener('orientationchange', doOnOrientationChange);
     // Initial execution if needed
-    doOnOrientationChange(); 
-});    
-                   
-function resize_appui(){  
+    doOnOrientationChange();
+});
+
+function resize_appui(){
     var new_height;
     new_height = $('html').outerHeight(true);
     if($('#appui_head').css('display') != 'none'){
@@ -58,9 +58,9 @@ function resize_appui(){
     }
     if($('#appui_foot').css('display') != 'none'){
         new_height = new_height - $('#appui_foot').outerHeight(true);
-    }     
-    $('#appui').height(new_height);                                                                                              
-}  
+    }
+    $('#appui').height(new_height);
+}
 
 /* draw Pages */
 function drawEnclosurePage(EnclosureObjArray) {
@@ -69,30 +69,30 @@ function drawEnclosurePage(EnclosureObjArray) {
     EnclosureObj = EnclosureObjArray.data[0];
     EnclosureID = EnclosureObj.EnclosureID;
     $('#appui_foot').show();
-                                             
-    $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).empty();                                                 
+
+    $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).empty();
     $('#' + APP_UI_HEAD_CONTAINER_ELEMENT_ID).html(EnclosureObj.Name + '<div class="logo"></div>');
-    $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).show();  
+    $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).show();
     $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).removeClass('back');
-    
-    $("#" + APP_UI_CONTAINER_ELEMENT_ID).empty(); 
+
+    $("#" + APP_UI_CONTAINER_ELEMENT_ID).empty();
     $('<div>').attr({
         id: 'EnclosureHeadDiv',
         class: 'DisplayHead'
     }).appendTo("#" + APP_UI_CONTAINER_ELEMENT_ID);
-                            
-    $("#EnclosureHeadDiv").html(getEnclosureHeadHTML(EnclosureObj));           
+
+    $("#EnclosureHeadDiv").html(getEnclosureHeadHTML(EnclosureObj));
 
     getAnimalListForEnclosure(EnclosureID);
 
     //navigator.notification.vibrate(500);
     navigator.notification.beep(1);
-                                             
+
     resize_appui();
 }
 
 function drawAnimalDetailPage(AnimalObject, AnimalID) {
-    var CommonTaxa, GenusTaxa, Age, Weight, Sex, HouseName, Accession, DisplayName, MediaID; 
+    var CommonTaxa, GenusTaxa, Age, Weight, Sex, HouseName, Accession, DisplayName, MediaID;
 
     MediaID = AnimalObject.data.MediaIdentifierID;
     CommonTaxa = AnimalObject.data.TaxonCommon;
@@ -105,13 +105,13 @@ function drawAnimalDetailPage(AnimalObject, AnimalID) {
 
     $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).addClass('back');
     showOrHideAndSaveContent(true);
-    
+
     if(HouseName == null || HouseName == '')
         DisplayName = Accession;
     else
         DisplayName = HouseName;
-                                      
-    
+
+
     $('<div>').attr({
         id: 'AnimalHeadDiv',
         class: 'DisplayHead'
@@ -121,52 +121,52 @@ function drawAnimalDetailPage(AnimalObject, AnimalID) {
         id: "ImageDiv",
         class: "ImageThumbDiv"
     }).appendTo("#AnimalHeadDiv");
-                                                                             
-    $("#ImageDiv").html(getMediaIMGElement(MediaID, DisplayName, 'file'));     
+
+    $("#ImageDiv").html(getMediaIMGElement(MediaID, DisplayName, 'file'));
 
     $('<div>').attr({
         id: "HeadInfoDiv",
         class: "ListingInfo"
     }).appendTo("#AnimalHeadDiv")
     .html('<div class="row">' +
-            '<div class="DisplayName">' + DisplayName + '</div>' + 
+            '<div class="DisplayName">' + DisplayName + '</div>' +
             '<div class="CommonTaxa">' + CommonTaxa + '</div>' +
-        '</div>' + 
-        '<div class="row">' + 
-            '<div class="GenusTaxa">' + GenusTaxa + '</div>' +  
-        '</div>' + 
-        '<div class="row">' + 
-            '<div class="Sex">' + Sex + '</div>' + 
-            '<div class="Age">Age:' + Age + '</div>' +                                   
+        '</div>' +
+        '<div class="row">' +
+            '<div class="GenusTaxa">' + GenusTaxa + '</div>' +
+        '</div>' +
+        '<div class="row">' +
+            '<div class="Sex">' + Sex + '</div>' +
+            '<div class="Age">Age:' + Age + '</div>' +
         '</div>');
     //'<div class="Weight">' + Weight + '</div>'
-                         
+
     $('<div>').attr({
         id: "AnimalActivityDiv",
         class: "AnimalDetail"
     }).appendTo("#" + APP_UI_CONTAINER_ELEMENT_ID)
-    .html('<div class="AnimalDetailHead">KEEPER NOTES:</div>');  
-    
+    .html('<div class="AnimalDetailHead">KEEPER NOTES:</div>');
+
     getRecentActivityForAnimal(AnimalID);
 }
 
-function drawDonationPage(){     
-    $("#" + APP_UI_CONTAINER_ELEMENT_ID).addClass('donation_page'); 
-    $("#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID).addClass('donation_page'); 
-    
-    if($("#" + APP_UI_CONTENT_HIDING_PLACE).html() == ''){  
+function drawDonationPage(){
+    $("#" + APP_UI_CONTAINER_ELEMENT_ID).addClass('donation_page');
+    $("#" + APP_UI_FOOT_CONTAINER_ELEMENT_ID).addClass('donation_page');
+
+    if($("#" + APP_UI_CONTENT_HIDING_PLACE).html() == ''){
         $("#" + APP_UI_HEAD_CONTAINER_ELEMENT_ID).addClass('back');
         showOrHideAndSaveContent(true);
-    }  
-    
-    $("#" + APP_UI_CONTAINER_ELEMENT_ID).empty(); 
+    }
+
+    $("#" + APP_UI_CONTAINER_ELEMENT_ID).empty();
     $('<div>').attr({
         id: 'DonationPage',
         class: 'DisplayHead'
     }).appendTo("#" + APP_UI_CONTAINER_ELEMENT_ID)
     .html('<div class="display"></div><div class="entry"></div>');
-                                       
-    $('#DonationPage .display').html('<div class="unit">$</div><div class="amount"></div>');  
+
+    $('#DonationPage .display').html('<div class="unit">$</div><div class="amount"></div>');
     $('#DonationPage .entry').html(
         '<div class="row">' +
             '<div class="item"><div class="item_inner">1</div></div>' +
@@ -189,51 +189,51 @@ function drawDonationPage(){
             '<div class="item delete"><div class="item_inner"> </div></div>' +
         '</div>'
     );
-    
+
     $.jStorage.set(DONATION_AMOUNT, '0');
     updateDonation();
-    
-    
+
+
     $('#DonationPage .entry .item').hammer({ dragLockToAxis: true });
-    $(document).off("tap", '#DonationPage .entry .item'); 
-    $(document).on("tap", '#DonationPage .entry .item', function(){ 
+    $(document).off("tap", '#DonationPage .entry .item');
+    $(document).on("tap", '#DonationPage .entry .item', function(){
         var amount = $.jStorage.get(DONATION_AMOUNT);
-        if($(this).hasClass('delete')){                    
-            if(amount.length > 0){                                                        
-                amount = amount.substring(0, amount.length - 1);   
-            }      
+        if($(this).hasClass('delete')){
+            if(amount.length > 0){
+                amount = amount.substring(0, amount.length - 1);
+            }
             if(amount == ''){
                 amount = '0';
-            }     
-            $.jStorage.set(DONATION_AMOUNT, amount);                  
+            }
+            $.jStorage.set(DONATION_AMOUNT, amount);
         }
-        else{                 
+        else{
             if(amount == '0'){
                 amount = '';
             }
             if(amount.indexOf('.') > -1){
-                if($(this).find('.item_inner').html() != '.'){  
+                if($(this).find('.item_inner').html() != '.'){
                     amount = amount + $(this).find('.item_inner').html();
                 }
             }
-            else{ 
+            else{
                 amount = amount + $(this).find('.item_inner').html();
-            }                             
+            }
             if(amount == '.'){
                 amount = '0.';
             }
             if(amount.indexOf('.') > -1){
-                if(amount.indexOf('.') <= amount.length + 3){                           
-                    amount = amount.substring(0, amount.indexOf('.') + 3);  
+                if(amount.indexOf('.') <= amount.length + 3){
+                    amount = amount.substring(0, amount.indexOf('.') + 3);
                 }
             }
-            $.jStorage.set(DONATION_AMOUNT, amount); 
+            $.jStorage.set(DONATION_AMOUNT, amount);
         }
         updateDonation();
-    }); 
+    });
 }
 
-function drawSendDonation(){  
+function drawSendDonation(){
     $("#" + APP_UI_CONTAINER_ELEMENT_ID).empty()
         .html('Thank you for your donation.');
 }
@@ -242,15 +242,15 @@ function drawSendDonation(){
 function validateLogin(userName, password) {
     var URI;
 
-    URI = LOOKUP_ISAPI_URI + LOGIN_POSTFIX + QUESTION + 
-          "UserName" + EQUALS + userName + AMPER + 
+    URI = LOOKUP_ISAPI_URI + LOGIN_POSTFIX + QUESTION +
+          "UserName" + EQUALS + userName + AMPER +
           "Password" + EQUALS + password;
 
-    getTracksAjax(URI, function(JSONResponseArray) {  
+    getTracksAjax(URI, function(JSONResponseArray) {
         setLoggedIn(JSONResponseArray);
-    }, false);                
+    }, false);
 }
-       
+
 function setLoggedIn(LoginResponse) {
     var SessionID = LoginResponse.data.TracksSessionID;
 
@@ -278,21 +278,35 @@ function checkLoginCookies() {
 }
 
 function reset() {
-    var LoginThingy = checkLoginCookies();
-                          
+    var LoginThingy, ServerAddress;
+
+    ServerAddress = $.jStorage.get(SERVER_ADDRESS_KEY);
+
+    if(ServerAddress == null || ServerAddress == '')
+        $.jStorage.set(SERVER_ADDRESS_KEY, SERVER_DEFAULT_HREF);
+
+    LoginThingy = checkLoginCookies();
+
     if(LoginThingy == NOT_LOGGED_IN)
         validateLogin(VISITOR_USER, VISITOR_PASS);
     else {
         $("#StartButton").attr("disabled", false);
-                        
+
         $('#StartButton').hammer({ dragLockToAxis: true });
-        $(document).off("tap", '#StartButton'); 
-        $(document).on("tap", '#StartButton', function(){    
+        $(document).off("tap", '#StartButton');
+        $(document).on("tap", '#StartButton', function(){
             getEnclosureIDFromBeacon($("#BeaconID").val());
+        });
+        $(document).off("click", '#gear');
+        $(document).on("click", '#gear', function(){
+            var CurrentServerHREF, NewServerHREF;
+            CurrentServerHREF = $.jStorage.get(SERVER_ADDRESS_KEY);
+            NewServerHREF = window.prompt("please enter the address of ISAPI Server", CurrentServerHREF);
+            $.jStorage.set(SERVER_ADDRESS_KEY, NewServerHREF);
         });
     }
 }
-   
+
 /* helper functions */
 function updateDonation(){
     $('#DonationPage .display .amount').html($.jStorage.get(DONATION_AMOUNT));
@@ -317,52 +331,52 @@ function getAnimalListItemHTML(AnimalObject, DivID) {
     Html += '<div id="' + DivID + '" class="ListItem">';
 
     if(MediaID != null && MediaID != '' && !isNaN(MediaID)) {
-        Html += '<div class="ImageThumbDiv">' + 
+        Html += '<div class="ImageThumbDiv">' +
                 getMediaIMGElement(MediaID, DisplayName, 'file') +
                 '</div>';
     }
-    else{   
+    else{
         Html += '<div class="ImageThumbDiv"></div>';
     }
 
     Html += '<div class="ListingInfo">';
     Html += '<div class="DisplayName">' + DisplayName + '</div>';
     Html += '<div class="CommonName">' + CommonName + '</div>';
-    Html += '<div class="Genus">' + Genus + '</div>';    
+    Html += '<div class="Genus">' + Genus + '</div>';
     Html += '</div></div>';
 
     return Html;
 }
-     
+
 function drawAnimalRecentActivity(AnimalActivityObjArray) {
     var RecordDate, CreateUser, Notes, DivName, MediaMasterID, DivHtml;
-                     
+
     $.each(AnimalActivityObjArray.data, function(idx, AnimalActivityObj) {
         RecordDate = AnimalActivityObj.RecordDate;
         CreateUser = AnimalActivityObj.CreateUser;
         Notes = AnimalActivityObj.Notes;
         MediaMasterID = AnimalActivityObj.MediaMasterID;
-                                                 
+
         DivName = "NoteDiv" + idx;
         DivHtml = '<div class="date">' + RecordDate + '</div>' +
             '<div class="create_user">(' + CreateUser + ')</div>';
-        
-        if(MediaMasterID == ''){    
-            DivHtml = DivHtml + '<div class="notes">' + Notes + '</div>';   
+
+        if(MediaMasterID == ''){
+            DivHtml = DivHtml + '<div class="notes">' + Notes + '</div>';
         }
         else{
-            DivHtml = DivHtml + '<div class="media">' + getMediaIMGElement(MediaMasterID, '', 'file') + '</div>';             
+            DivHtml = DivHtml + '<div class="media">' + getMediaIMGElement(MediaMasterID, '', 'file') + '</div>';
         }
-        
+
         $('<div>').attr({
             id: DivName,
             class: "AnimalActivity"
         }).appendTo("#AnimalActivityDiv")
-        .html(DivHtml);                                               
+        .html(DivHtml);
     });
 }
 
-function drawAnimalListingDisplay(AnimalObjectArray) {    
+function drawAnimalListingDisplay(AnimalObjectArray) {
     $("#" + APP_UI_CONTAINER_ELEMENT_ID).append('<div class="ContentContainer"><div class="ContentInner"></div></div>');
     $.each(AnimalObjectArray.data, function(idx, AnimalObj) {
         var AnimalID, DivID;
@@ -371,19 +385,19 @@ function drawAnimalListingDisplay(AnimalObjectArray) {
         DivID = 'Animal' + AnimalID;
 
         $("#" + APP_UI_CONTAINER_ELEMENT_ID + ' .ContentInner').append(getAnimalListItemHTML(AnimalObj, DivID));
-                                                                  
+
         $('#' + DivID).hammer({ dragLockToAxis: true });
-        $(document).off("tap", '#' + DivID); 
-        $(document).on("tap", '#' + DivID, function(){       
+        $(document).off("tap", '#' + DivID);
+        $(document).on("tap", '#' + DivID, function(){
             getAnimalDetail($(this).attr("id").replace("Animal", ""));
-        });    
+        });
     });
 }
 
 function drawTaxaListingDisplay(TaxaObjectArray) {
     $.each(TaxaObjectArray.data, function(idx, TaxaObject) {
         var TaxID, Common, Scientific, Rank, Range, Endangered, Venomous, DivID;
-        
+
         TaxID = TaxaObject.TaxID;
         Common = TaxaObject.Common;
         Scientific = TaxaObject.Scientific;
@@ -393,11 +407,11 @@ function drawTaxaListingDisplay(TaxaObjectArray) {
         Venomous = TaxaObject.Venomous;
         DivID = "Tax" + TaxID;
 
-        $("#" + APP_UI_CONTAINER_ELEMENT_ID).append('<div id="' + DivID + '">' + 
-            Common + ", " + Scientific + ", " + Rank + ", " + Range + ", " + 
-            Endangered + ", " + Venomous + 
+        $("#" + APP_UI_CONTAINER_ELEMENT_ID).append('<div id="' + DivID + '">' +
+            Common + ", " + Scientific + ", " + Rank + ", " + Range + ", " +
+            Endangered + ", " + Venomous +
             '</div>');
-        
+
         $("#" + DivID).data("TaxID", TaxID);
     });
 }
@@ -418,9 +432,9 @@ function getAnimalDetail(AnimalID) {
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + TAXA_DATATYPE +
           AMPER + sessionIDQuerystringPair();
 
-    getTracksAjax(URI, function(JSONResponseArray) {  
+    getTracksAjax(URI, function(JSONResponseArray) {
         drawAnimalDetailPage(JSONResponseArray, AnimalID);
-    }, false);                
+    }, false);
 }
 
 function getAnimalListForEnclosure(EnclosureID) {
@@ -430,9 +444,9 @@ function getAnimalListForEnclosure(EnclosureID) {
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + ANIMALS_DATATYPE +
           AMPER + sessionIDQuerystringPair();
 
-    getTracksAjax(URI, function(JSONResponseArray) {  
+    getTracksAjax(URI, function(JSONResponseArray) {
         drawAnimalListingDisplay(JSONResponseArray);
-    }, false);                
+    }, false);
 }
 
 function getRecentActivityForAnimal(AnimalID) {
@@ -442,14 +456,14 @@ function getRecentActivityForAnimal(AnimalID) {
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + ACTIVITY_DATATYPE +
           AMPER + sessionIDQuerystringPair();
 
-    getTracksAjax(URI, function(JSONResponseArray) {  
+    getTracksAjax(URI, function(JSONResponseArray) {
         drawAnimalRecentActivity(JSONResponseArray);
-    }, false);                
+    }, false);
 }
 
 function getMediaIMGElement(MediaFileID, AnimalName, ReturnType) {
     var MediaSrc, TagHTML;
-    
+
     MediaSrc = LOOKUP_ISAPI_URI + MEDIA_POSTFIX + SLASH + MediaFileID + QUESTION + 'ReturnType' + EQUALS + ReturnType + AMPER + sessionIDQuerystringPair();
     TagHTML = '<img class="ImageThumb" src="' + MediaSrc + '"';
 
@@ -463,16 +477,16 @@ function getMediaIMGElement(MediaFileID, AnimalName, ReturnType) {
 
 function getEnclosureIDFromBeacon(BeaconID) {
     var URI;
-    
+
     CurrentBeacon = BeaconID;
-    
-    URI = LOOKUP_ISAPI_URI + LOOKUP_ENCLOSURE_POSTFIX + QUESTION + 
+
+    URI = LOOKUP_ISAPI_URI + LOOKUP_ENCLOSURE_POSTFIX + QUESTION +
           ENCLOSURE_IDENTIFIER_TYPE + EQUALS + BEACON_IDENTIFIER_TYPE + AMPER +
           ENCLOSURE_ID + EQUALS + BeaconID + AMPER + sessionIDQuerystringPair();
 
-    getTracksAjax(URI, function(JSONResponseArray) {  
+    getTracksAjax(URI, function(JSONResponseArray) {
         drawEnclosurePage(JSONResponseArray);
-    }, false);                
+    }, false);
 }
 
 function getTaxaListForEnclosure(EnclosureID) {
@@ -482,14 +496,14 @@ function getTaxaListForEnclosure(EnclosureID) {
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + TAXA_DATATYPE +
           AMPER + sessionIDQuerystringPair();
 
-    getTracksAjax(URI, function(JSONResponseArray) {  
+    getTracksAjax(URI, function(JSONResponseArray) {
         drawTaxaListingDisplay(JSONResponseArray);
-    }, false);                
+    }, false);
 }
-    
+
 function showOrHideAndSaveContent(HideNow) {
     var TargetDiv, SourceDiv;
-    
+
     if(HideNow) {
         TargetDiv = $("#" + APP_UI_CONTENT_HIDING_PLACE);
         SourceDiv = $("#" + APP_UI_CONTAINER_ELEMENT_ID);
@@ -497,17 +511,17 @@ function showOrHideAndSaveContent(HideNow) {
     else {
         SourceDiv = $("#" + APP_UI_CONTENT_HIDING_PLACE);
         TargetDiv = $("#" + APP_UI_CONTAINER_ELEMENT_ID);
-    }         
-    
+    }
+
     TargetDiv.html(SourceDiv.html());
     SourceDiv.empty();
-    
+
     return TargetDiv.html().length > 0;
 }
-    
+
 function getTracksAjax(URI, callback, isAsync) {
     var request;
-    
+
     if(isAsync == undefined)
         isAsync = true;
 
@@ -525,7 +539,7 @@ function getTracksAjax(URI, callback, isAsync) {
         JSONResponseArray = $.parseJSON(XMLHttpRequest.responseText);
 
         if(JSONResponseArray != null) {
-            if(JSONResponseArray.error.response_code == 'invalid_session'){                      
+            if(JSONResponseArray.error.response_code == 'invalid_session'){
                 $.removeCookie(SESSION_COOKIE_NAME);
                 $.jStorage.set(SESSION_COOKIE_NAME, '');
             }
@@ -642,19 +656,18 @@ function onDidRangeBeaconsInRegion(pluginResult) {
 //        app.gotoPage('page-default')
 //        return
 //    }
-    
+
 }
-  
+
 function sessionIDQuerystringPair() {
     return SESSION_ID_NAME + EQUALS + $.jStorage.get(SESSION_COOKIE_NAME) + AMPER + "dt=" + Date.now();
 }
 
-
 /* variables */
 var CurrentBeacon = '';
-
+var SERVER_ADDRESS_KEY = "ServerHref";
 var LOOKUP_ISAPI_DLL = 'tracksmobile.dll';
-var LOOKUP_ISAPI_URI = 'http://192.168.100.225/tracks/' + LOOKUP_ISAPI_DLL;
+var LOOKUP_ISAPI_URI = $.jStorage.get(SERVER_ADDRESS_KEY) + LOOKUP_ISAPI_DLL;
 var APP_UI_CONTAINER_ELEMENT_ID = 'appui';
 var APP_UI_HEAD_CONTAINER_ELEMENT_ID = 'appui_head';
 var APP_UI_FOOT_CONTAINER_ELEMENT_ID = 'appui_foot';
