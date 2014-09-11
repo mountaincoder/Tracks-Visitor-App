@@ -245,7 +245,7 @@ function drawSendDonation(){
 function validateLogin(userName, password) {
     var URI;
 
-    URI = LOOKUP_ISAPI_URI + LOGIN_POSTFIX + QUESTION +
+    URI = getISAPI_URI() + LOGIN_POSTFIX + QUESTION +
           "UserName" + EQUALS + userName + AMPER +
           "Password" + EQUALS + password;
 
@@ -303,28 +303,34 @@ function reset() {
 
     ServerAddress = $.jStorage.get(SERVER_ADDRESS_KEY);
 
-    if(ServerAddress == null || ServerAddress == '')
+    if(ServerAddress == null || ServerAddress != SERVER_DEFAULT_HREF)
         $.jStorage.set(SERVER_ADDRESS_KEY, SERVER_DEFAULT_HREF);
 
     LoginThingy = checkLoginCookies();
                                                                                         
     PreLoadEncID = getQueryStringAssocArray($(location).attr("href"))[ENCLOSURE_ID];
 
-    if(LoginThingy == NOT_LOGGED_IN)
-        validateLogin(VISITOR_USER, VISITOR_PASS);
-    else {    
-        if(PreLoadEncID != null){
-            getEnclosureIDFromBeacon(PreLoadEncID);
-        }   
+    $('#gear').hammer({ dragLockToAxis: true });
+    $(document).off("tap", '#gear');
+    $(document).on("tap", '#gear', function(){
+        var CurrentServerHREF, NewServerHREF;
+        CurrentServerHREF = $.jStorage.get(SERVER_ADDRESS_KEY);
+        NewServerHREF = window.prompt("please enter the address of ISAPI Server", CurrentServerHREF);
+        $.jStorage.set(SERVER_ADDRESS_KEY, NewServerHREF);
+    });
 
-        $('#gear').hammer({ dragLockToAxis: true });
-        $(document).off("tap", '#gear');
-        $(document).on("tap", '#gear', function(){
-            var CurrentServerHREF, NewServerHREF;
-            CurrentServerHREF = $.jStorage.get(SERVER_ADDRESS_KEY);
-            NewServerHREF = window.prompt("please enter the address of ISAPI Server", CurrentServerHREF);
-            $.jStorage.set(SERVER_ADDRESS_KEY, NewServerHREF);
-        });
+    try {
+        if(LoginThingy == NOT_LOGGED_IN)
+            validateLogin(VISITOR_USER, VISITOR_PASS);
+        else {    
+            if(PreLoadEncID != null){
+                getEnclosureIDFromBeacon(PreLoadEncID);
+            }   
+        }
+    }
+    catch(e) { 
+        console.log(e.message); 
+        alert('your server is set to "' + $.jStorage.get(SERVER_ADDRESS_KEY) + '" and is apparently not being found.');
     }
 }
 
@@ -449,7 +455,7 @@ function getEnclosureHeadHTML(EnclosureObject) {
 function getAnimalDetail(AnimalID) {
     var URI;
 
-    URI = LOOKUP_ISAPI_URI + ANIMAL_INFO_POSTFIX + SLASH + AnimalID +
+    URI = getISAPI_URI() + ANIMAL_INFO_POSTFIX + SLASH + AnimalID +
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + TAXA_DATATYPE +
           AMPER + sessionIDQuerystringPair();
 
@@ -461,7 +467,7 @@ function getAnimalDetail(AnimalID) {
 function getAnimalListForEnclosure(EnclosureID) {
     var URI;
 
-    URI = LOOKUP_ISAPI_URI + ENCLOSURE_TAXA_LIST_POSTFIX + SLASH + EnclosureID +
+    URI = getISAPI_URI() + ENCLOSURE_TAXA_LIST_POSTFIX + SLASH + EnclosureID +
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + ANIMALS_DATATYPE +
           AMPER + sessionIDQuerystringPair();
 
@@ -473,7 +479,7 @@ function getAnimalListForEnclosure(EnclosureID) {
 function getRecentActivityForAnimal(AnimalID) {
     var URI;
 
-    URI = LOOKUP_ISAPI_URI + ANIMAL_INFO_POSTFIX + SLASH + AnimalID +
+    URI = getISAPI_URI() + ANIMAL_INFO_POSTFIX + SLASH + AnimalID +
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + ACTIVITY_DATATYPE +
           AMPER + sessionIDQuerystringPair();
 
@@ -485,7 +491,7 @@ function getRecentActivityForAnimal(AnimalID) {
 function getMediaIMGElement(MediaFileID, AnimalName, ReturnType) {
     var MediaSrc, TagHTML;
 
-    MediaSrc = LOOKUP_ISAPI_URI + MEDIA_POSTFIX + SLASH + MediaFileID + QUESTION + 'ReturnType' + EQUALS + ReturnType + AMPER + sessionIDQuerystringPair();
+    MediaSrc = getISAPI_URI() + MEDIA_POSTFIX + SLASH + MediaFileID + QUESTION + 'ReturnType' + EQUALS + ReturnType + AMPER + sessionIDQuerystringPair();
     TagHTML = '<img class="ImageThumb" src="' + MediaSrc + '"';
 
     if(AnimalName != null && AnimalName != '')
@@ -501,7 +507,7 @@ function getEnclosureIDFromBeacon(BeaconID) {
 
     CurrentBeacon = BeaconID;
 
-    URI = LOOKUP_ISAPI_URI + LOOKUP_ENCLOSURE_POSTFIX + QUESTION +
+    URI = getISAPI_URI() + LOOKUP_ENCLOSURE_POSTFIX + QUESTION +
           ENCLOSURE_IDENTIFIER_TYPE + EQUALS + BEACON_IDENTIFIER_TYPE + AMPER +
           ENCLOSURE_ID + EQUALS + BeaconID + AMPER + sessionIDQuerystringPair();
 
@@ -513,7 +519,7 @@ function getEnclosureIDFromBeacon(BeaconID) {
 function getTaxaListForEnclosure(EnclosureID) {
     var URI;
 
-    URI = LOOKUP_ISAPI_URI + ENCLOSURE_TAXA_LIST_POSTFIX + SLASH + EnclosureID +
+    URI = getISAPI_URI() + ENCLOSURE_TAXA_LIST_POSTFIX + SLASH + EnclosureID +
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + TAXA_DATATYPE +
           AMPER + sessionIDQuerystringPair();
 
@@ -680,6 +686,10 @@ function onDidRangeBeaconsInRegion(pluginResult) {
 
 }
 
+function getISAPI_URI() {
+    return $.jStorage.get(SERVER_ADDRESS_KEY) + LOOKUP_ISAPI_DLL;
+}
+
 function sessionIDQuerystringPair() {
     return SESSION_ID_NAME + EQUALS + $.jStorage.get(SESSION_COOKIE_NAME) + AMPER + "dt=" + Date.now();
 }
@@ -688,7 +698,7 @@ function sessionIDQuerystringPair() {
 var CurrentBeacon = '';
 var SERVER_ADDRESS_KEY = "ServerHref";
 var LOOKUP_ISAPI_DLL = 'tracksmobile.dll';
-var LOOKUP_ISAPI_URI = $.jStorage.get(SERVER_ADDRESS_KEY) + LOOKUP_ISAPI_DLL;
+//var LOOKUP_ISAPI_URI = $.jStorage.get(SERVER_ADDRESS_KEY) + LOOKUP_ISAPI_DLL;
 var APP_UI_CONTAINER_ELEMENT_ID = 'appui';
 var APP_UI_HEAD_CONTAINER_ELEMENT_ID = 'appui_head';
 var APP_UI_FOOT_CONTAINER_ELEMENT_ID = 'appui_foot';
