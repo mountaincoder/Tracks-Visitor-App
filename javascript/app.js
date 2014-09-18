@@ -461,7 +461,7 @@ function getAnimalDetail(AnimalID) {
 
     URI = getISAPI_URI() + ANIMAL_INFO_POSTFIX + SLASH + AnimalID +
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + TAXA_DATATYPE +
-          AMPER + sessionIDQuerystringPair();
+          AMPER + sessionIDQuerystringPair(false);
 
     getTracksAjax(URI, function(JSONResponseArray) {
         drawAnimalDetailPage(JSONResponseArray, AnimalID);
@@ -473,7 +473,7 @@ function getAnimalListForEnclosure(EnclosureID) {
 
     URI = getISAPI_URI() + ENCLOSURE_TAXA_LIST_POSTFIX + SLASH + EnclosureID +
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + ANIMALS_DATATYPE +
-          AMPER + sessionIDQuerystringPair();
+          AMPER + sessionIDQuerystringPair(false);
 
     getTracksAjax(URI, function(JSONResponseArray) {
         drawAnimalListingDisplay(JSONResponseArray);
@@ -485,7 +485,7 @@ function getRecentActivityForAnimal(AnimalID) {
 
     URI = getISAPI_URI() + ANIMAL_INFO_POSTFIX + SLASH + AnimalID +
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + ACTIVITY_DATATYPE +
-          AMPER + sessionIDQuerystringPair();
+          AMPER + sessionIDQuerystringPair(false);
 
     getTracksAjax(URI, function(JSONResponseArray) {
         drawAnimalRecentActivity(JSONResponseArray);
@@ -495,7 +495,7 @@ function getRecentActivityForAnimal(AnimalID) {
 function getMediaIMGElement(MediaFileID, AnimalName, ReturnType) {
     var MediaSrc, TagHTML;
 
-    MediaSrc = getISAPI_URI() + MEDIA_POSTFIX + SLASH + MediaFileID + QUESTION + 'ReturnType' + EQUALS + ReturnType + AMPER + sessionIDQuerystringPair();
+    MediaSrc = getISAPI_URI() + MEDIA_POSTFIX + SLASH + MediaFileID + QUESTION + 'ReturnType' + EQUALS + ReturnType + AMPER + sessionIDQuerystringPair(true);
     TagHTML = '<img class="ImageThumb" src="' + MediaSrc + '"';
 
     if(AnimalName != null && AnimalName != '')
@@ -513,7 +513,7 @@ function getEnclosureIDFromBeacon(BeaconID) {
 
     URI = getISAPI_URI() + LOOKUP_ENCLOSURE_POSTFIX + QUESTION +
           ENCLOSURE_IDENTIFIER_TYPE + EQUALS + BEACON_IDENTIFIER_TYPE + AMPER +
-          ENCLOSURE_ID + EQUALS + BeaconID + AMPER + sessionIDQuerystringPair();
+          ENCLOSURE_ID + EQUALS + BeaconID + AMPER + sessionIDQuerystringPair(false);
 
     getTracksAjax(URI, function(JSONResponseArray) {
         drawEnclosurePage(JSONResponseArray);
@@ -525,7 +525,7 @@ function getTaxaListForEnclosure(EnclosureID) {
 
     URI = getISAPI_URI() + ENCLOSURE_TAXA_LIST_POSTFIX + SLASH + EnclosureID +
           QUESTION + DATATYPE_PAIR_NAME + EQUALS + TAXA_DATATYPE +
-          AMPER + sessionIDQuerystringPair();
+          AMPER + sessionIDQuerystringPair(false);
 
     getTracksAjax(URI, function(JSONResponseArray) {
         drawTaxaListingDisplay(JSONResponseArray);
@@ -695,8 +695,11 @@ function getISAPI_URI() {
     return $.jStorage.get(SERVER_ADDRESS_KEY) + LOOKUP_ISAPI_DLL;
 }
 
-function sessionIDQuerystringPair() {
-    return SESSION_ID_NAME + EQUALS + $.jStorage.get(SESSION_COOKIE_NAME) + AMPER + "dt=" + Date.now();
+function sessionIDQuerystringPair(NoDynamic) {
+    if(NoDynamic)
+        return SESSION_ID_NAME + EQUALS + $.jStorage.get(SESSION_COOKIE_NAME);
+    else
+        return SESSION_ID_NAME + EQUALS + $.jStorage.get(SESSION_COOKIE_NAME) + AMPER + "dt=" + Date.now();
 }
 
 /* variables */
