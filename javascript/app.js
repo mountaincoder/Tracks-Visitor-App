@@ -35,6 +35,16 @@ $(function(){
         }
     });
 
+    $('#gear').hammer({ dragLockToAxis: true });
+    $(document).off("tap", '#gear');
+    $(document).on("tap", '#gear', function(){
+        var CurrentServerHREF, NewServerHREF;
+        CurrentServerHREF = $.jStorage.get(SERVER_ADDRESS_KEY);
+        NewServerHREF = window.prompt("please enter the address of ISAPI Server", CurrentServerHREF);
+        $.jStorage.set(SERVER_ADDRESS_KEY, NewServerHREF);
+        reset();
+    });
+
     function doOnOrientationChange(){
         switch(window.orientation) {
             case -90:
@@ -312,15 +322,6 @@ function reset() {
                                                                                         
     PreLoadEncID = getQueryStringAssocArray($(location).attr("href"))[ENCLOSURE_ID];
 
-    $('#gear').hammer({ dragLockToAxis: true });
-    $(document).off("tap", '#gear');
-    $(document).on("tap", '#gear', function(){
-        var CurrentServerHREF, NewServerHREF;
-        CurrentServerHREF = $.jStorage.get(SERVER_ADDRESS_KEY);
-        NewServerHREF = window.prompt("please enter the address of ISAPI Server", CurrentServerHREF);
-        $.jStorage.set(SERVER_ADDRESS_KEY, NewServerHREF);
-    });
-
     try {
         if(LoginThingy == NOT_LOGGED_IN)
             validateLogin(VISITOR_USER, VISITOR_PASS);
@@ -333,6 +334,7 @@ function reset() {
     catch(e) { 
         console.log(e.message); 
         alert('your server is set to "' + $.jStorage.get(SERVER_ADDRESS_KEY) + '" and is apparently not being found.');
+        $('#errors').html('your server is set to "' + $.jStorage.get(SERVER_ADDRESS_KEY) + '" and is apparently not being found.')
     }
 }
 
